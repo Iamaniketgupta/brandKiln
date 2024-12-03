@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const AddTaskModal = ({ modal, setModal, currentTask, setCurrentTask, hadleCreateTask }) => {
+const AddTaskModal = ({ modal, selectedTask, setModal, currentTask, setCurrentTask, hadleCreateTask }) => {
+
+
 
     function handleTags(value) {
 
@@ -39,7 +41,7 @@ const AddTaskModal = ({ modal, setModal, currentTask, setCurrentTask, hadleCreat
                             onChange={(e) => setCurrentTask((p) => ({ ...p, date: e.target.value }))}
                             className=' cursor-pointer bg-gray-100 w-full rounded-lg my-2 p-2'
                             required
-                            type="date" name="" id="date" value={currentTask?.date} />
+                            type="date" name="" id="date" value={currentTask?.date || selectedTask?.date} />
                     </div>
                 </label>
 

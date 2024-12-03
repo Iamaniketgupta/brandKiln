@@ -1,11 +1,19 @@
-## Go Live : https://fluxmessenger.vercel.app/
+## Go Live : [https://brandkiln.vercel.app/](https://brandkiln.vercel.app/)
 
-## Screen Shots
-![image](https://github.com/Iamaniketgupta/fluxmessenger/assets/115345548/07e6bea5-f123-44a0-8f34-88db95970541)
+## Features
 
-![image](https://github.com/Iamaniketgupta/fluxmessenger/assets/115345548/dde59b79-ceb2-4475-9482-e8c781141f4e)
+- **Add Task**: Create new tasks easily with a user-friendly interface.  
+- **Delete Task**: Remove tasks you no longer need.  
+- **Move Task**: Seamlessly move tasks between different sections or states.  
+- **Mark as Completed**: Mark tasks as completed to track progress.  
+- **Overdue Tasks**: Highlight tasks that are past their due date for better prioritization.  
 
-![image](https://github.com/Iamaniketgupta/fluxmessenger/assets/115345548/c1d6b11e-b540-488a-bfe9-a75d12c04723)
+### Special Feature
 
-![image](https://github.com/Iamaniketgupta/fluxmessenger/assets/115345548/82366032-2240-48ee-bb59-241523245f74)
+- **Drag & Drop Planned Tasks**: Intuitively organize planned tasks by dragging and dropping them into the desired position.
 
+## Screenshots
+
+![alt text](image.png)
+
+![alt text](image-1.png)

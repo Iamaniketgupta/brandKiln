@@ -11,11 +11,12 @@ import { FaBarsStaggered } from "react-icons/fa6";
 const Dashboard = () => {
     const [modal, setModal] = useState(false);
     const [show, setShow] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
     const [allTask, setAllTask] = useState(() => {
         const tasks = JSON.parse(localStorage.getItem('tasks'));
         return tasks ? tasks : [];
     });
-    
+
     const [currentTask, setCurrentTask] = useState({
         taskName: '',
         date: '',
@@ -32,16 +33,16 @@ const Dashboard = () => {
         if (tasks) {
             setAllTask(tasks);
         }
-    }, []); 
+    }, []);
 
     function hadleCreateTask(e) {
         e.preventDefault();
-    
+
         const dateParts = currentTask.date?.split("-");
         const day = dateParts[2];
         const monthNumber = currentTask.date?.split("-")[1];
         const year = currentTask.date?.split("-")[0];
-    
+
         let monthName;
         switch (monthNumber) {
             case "01":
@@ -84,17 +85,17 @@ const Dashboard = () => {
                 monthName = "";
                 break;
         }
-    
+
         const newTask = {
-            id:crypto.randomUUID(),
+            id: crypto.randomUUID(),
             taskName: currentTask?.taskName,
             date: day,
             month: monthName,
             year: year,
             tags: [...currentTask.tags]
         };
-    
-        setAllTask((pr) => ([...pr, newTask]));
+
+        setAllTask(prevTasks => [...prevTasks, newTask]);
 
 
         setCurrentTask({
@@ -105,11 +106,11 @@ const Dashboard = () => {
         setModal(false);
 
     }
-    
+
     useEffect(() => {
         saveToLocalStorage('tasks', allTask);
     }, [allTask]);
-    
+
     return (
         <div className="flex items-start w-full">
             <div className="inline-block h-screen w-fit">
@@ -288,57 +289,11 @@ const Dashboard = () => {
                     </div>
 
                     <div className="flex cursor-pointer items-center pr-2 ">
-                        <div className="lg:pr-3">
 
-
-                            <div className="border-2 border-black rounded-md w-fit inline-flex items-center lg:px-2 px-1 py-1 justify-center ">
-                                <svg
-                                    className="mx-2"
-                                    width={16}
-                                    height={17}
-                                    viewBox="0 0 16 17"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M4 8.5H12"
-                                        stroke="black"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                    <path
-                                        d="M1.5 5.5H14.5"
-                                        stroke="black"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                    <path
-                                        d="M6.5 11.5H9.5"
-                                        stroke="black"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-
-                                <p className="lg:block hidden ">
-                                    Sort By
-                                </p>
-                            </div>
-
-                            <div className="border-2 cursor-pointer mx-2  border-black rounded-md w-fit inline-flex items-center lg:px-2 px-1 py-1 justify-center ">
-                                <svg className="mx-2"
-                                    width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.63028 3.5H13.3697C13.4666 3.5 13.5614 3.52814 13.6425 3.58099C13.7237 3.63384 13.7878 3.70914 13.827 3.79772C13.8662 3.88631 13.8788 3.98437 13.8633 4.07999C13.8478 4.1756 13.8049 4.26466 13.7397 4.33634L9.63003 8.85697C9.54636 8.949 9.5 9.06892 9.5 9.1933V12.7324C9.5 12.8147 9.47968 12.8958 9.44084 12.9683C9.402 13.0409 9.34584 13.1028 9.27735 13.1484L7.27735 14.4818C7.20205 14.532 7.11454 14.5608 7.02415 14.5652C6.93375 14.5695 6.84387 14.5493 6.76408 14.5066C6.68428 14.4639 6.61758 14.4003 6.57107 14.3227C6.52457 14.245 6.5 14.1562 6.5 14.0657V9.1933C6.5 9.06892 6.45364 8.949 6.36997 8.85697L2.26031 4.33634C2.19515 4.26466 2.15221 4.1756 2.13672 4.07999C2.12122 3.98437 2.13384 3.88631 2.17302 3.79772C2.21221 3.70914 2.27628 3.63384 2.35746 3.58099C2.43863 3.52814 2.53341 3.5 2.63028 3.5V3.5Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <p className="lg:block hidden ">
-                                    Filter
-                                </p>
-                            </div>
-                        </div>
-                        <button onClick={() => setModal(true)}
+                        <button onClick={() => {
+                            setSelectedTask(null);
+                            setModal(true);
+                        }}
                             className="border-2 hover:bg-gray-700   bg-black text-white border-black rounded-md w-fit inline-flex items-center lg:px-2 py-1 justify-center ">
                             <svg className="mx-2"
                                 width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -355,13 +310,13 @@ const Dashboard = () => {
                 </div>
 
                 <div className="p-5 overflow-y-scroll h-[80vh]" style={{ scrollbarWidth: "none" }} >
-                    <Tasks setModal={setModal} allTask={allTask} setAllTask={setAllTask} />
+                    <Tasks setModal={setModal} allTask={allTask} setAllTask={setAllTask} setSelectedTask={setSelectedTask} />
                 </div>
 
 
             </div>
 
-            <AddTaskModal hadleCreateTask={hadleCreateTask} setCurrentTask={setCurrentTask} currentTask={currentTask} modal={modal} setModal={setModal} />
+            <AddTaskModal selectedTask={selectedTask} hadleCreateTask={hadleCreateTask} setCurrentTask={setCurrentTask} currentTask={currentTask} modal={modal} setModal={setModal} />
 
         </div>
     );

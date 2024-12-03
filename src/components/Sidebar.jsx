@@ -20,7 +20,7 @@ const Sidebar = ({show,setShow}) => {
                         className="w-full h-full object-cover" />
                 </div>
                 <div className="font-semibold text-2xl">
-                    Venture
+                    Brand Kiln
                 </div>
             </div>
 
